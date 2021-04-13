@@ -10,4 +10,7 @@ class CreationResponse with _$CreationResponse {
 
   factory CreationResponse.fromJson(Map<String, dynamic> json) =>
       _$CreationResponseFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => toJson();
 }
