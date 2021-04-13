@@ -16,10 +16,12 @@ export 'package:create_gdocs_microservice/src/models/creation_request.dart';
 
 @CloudFunction()
 Future<CreationResponse> function(CreationRequest request) async {
+  // TODO: verify firebase auth credentials are in the headers
+
   // User supplied config is in the json data
   // The "creating user" refers to the user account that creates the docs
 
-  // TODO: get the userId from the auth header
+  // get the userId from the json or the auth header
   final creatingUserId = request.creatorId ?? '';
 
   // create a database entry object that will be added to and finally saved

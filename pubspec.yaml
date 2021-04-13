@@ -16,7 +16,11 @@ dependencies:
 
 dev_dependencies:
   build_runner: any
-  functions_framework_builder: any
+  functions_framework_builder: 
+    git: 
+      url: https://github.com/nickmeinhold/functions-framework-dart.git
+      path: functions_framework_builder
+      ref: include-mixins-in-builder-tojson-check
   freezed: any
   json_serializable: any
   test: any

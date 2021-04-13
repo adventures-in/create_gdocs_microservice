@@ -4,7 +4,7 @@ part 'google_user_credentials.freezed.dart';
 part 'google_user_credentials.g.dart';
 
 @freezed
-abstract class GoogleUserCredentials with _$GoogleUserCredentials {
+class GoogleUserCredentials with _$GoogleUserCredentials {
   factory GoogleUserCredentials(
       {@JsonKey(name: 'refresh_token') required String refreshToken,
       @JsonKey(name: 'expiry_date') required int expiryDate,
