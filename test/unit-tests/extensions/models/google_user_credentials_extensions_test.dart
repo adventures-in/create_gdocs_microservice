@@ -1,5 +1,5 @@
 import 'package:create_gdocs_microservice/src/extensions/models/google_user_credentials_extensions.dart';
-import 'package:shared_models/shared_models.dart';
+import 'package:create_gdocs_microservice/src/models/google_user_credentials.dart';
 import 'package:test/test.dart';
 
 void main() {

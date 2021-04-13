@@ -1,5 +1,5 @@
+import 'package:create_gdocs_microservice/src/models/google_user_credentials.dart';
 import 'package:googleapis_auth/auth_io.dart';
-import 'package:shared_models/shared_models.dart' show GoogleUserCredentials;
 
 /// [AccessCredentials] are used in creating [AutoRefreshingAuthClient]
 AccessCredentials get accessCredentials => AccessCredentials(

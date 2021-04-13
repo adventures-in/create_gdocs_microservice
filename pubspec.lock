@@ -14,14 +14,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.0.0"
+    version: "20.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.0"
+    version: "1.4.0"
   args:
     dependency: transitive
     description:
@@ -85,13 +85,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.12"
-  build_verify:
-    dependency: "direct dev"
-    description:
-      name: build_verify
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   built_collection:
     dependency: transitive
     description:
@@ -161,7 +154,7 @@ packages:
       name: crypto
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   dart_style:
     dependency: transitive
     description:
@@ -183,6 +176,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  freezed:
+    dependency: "direct dev"
+    description:
+      name: freezed
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.14.1+2"
   freezed_annotation:
     dependency: "direct main"
     description:
@@ -200,10 +200,12 @@ packages:
   functions_framework_builder:
     dependency: "direct dev"
     description:
-      name: functions_framework_builder
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
+      path: functions_framework_builder
+      ref: include-mixins-in-builder-tojson-check
+      resolved-ref: "4b5015e4beefb61d99111bc94a1bf2c0b0859e5b"
+      url: "https://github.com/nickmeinhold/functions-framework-dart.git"
+    source: git
+    version: "0.4.1-dev"
   glob:
     dependency: transitive
     description:
@@ -245,7 +247,7 @@ packages:
       name: http_multi_server
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   http_parser:
     dependency: transitive
     description:
@@ -268,14 +270,14 @@ packages:
     source: hosted
     version: "0.6.3"
   json_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
   json_serializable:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: json_serializable
       url: "https://pub.dartlang.org"
@@ -315,7 +317,7 @@ packages:
       name: mockito
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.3"
+    version: "5.0.4"
   node_preamble:
     dependency: transitive
     description:
@@ -365,15 +367,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  shared_models:
-    dependency: "direct main"
-    description:
-      path: shared_models
-      ref: HEAD
-      resolved-ref: d989489e4efb1d622b0f168024f862a1f2e9f430
-      url: "https://github.com/enspyrco/the_process"
-    source: git
-    version: "0.0.0"
   shelf:
     dependency: "direct main"
     description:
@@ -409,6 +402,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  source_helper:
+    dependency: transitive
+    description:
+      name: source_helper
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   source_map_stack_trace:
     dependency: transitive
     description:
