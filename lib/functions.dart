@@ -72,7 +72,7 @@ Future<CreationResponse> function(CreationRequest request) async {
     // Log and return any errors.
     print('\n\n$error\n\nSection doc fields: $docFields\n\n');
     print(trace);
+    // TODO: return Response.internalServerError(body: error);
     return CreationResponse(resourceNames: <String?>[]);
-    // Response.internalServerError(body: error);
   }
 }
