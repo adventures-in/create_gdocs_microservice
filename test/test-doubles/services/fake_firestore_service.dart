@@ -1,6 +1,6 @@
+import 'package:create_gdocs_microservice/src/models/google_user_credentials.dart';
 import 'package:create_gdocs_microservice/src/services/firestore_service.dart';
 import 'package:googleapis/firestore/v1.dart';
-import 'package:shared_models/src/google_user_credentials.dart';
 import 'package:test/fake.dart';
 
 class FakeFirestoreService extends Fake implements FirestoreService {

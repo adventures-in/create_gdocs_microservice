@@ -85,13 +85,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.12"
-  build_verify:
-    dependency: "direct dev"
-    description:
-      name: build_verify
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   built_collection:
     dependency: transitive
     description:
@@ -183,6 +176,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  freezed:
+    dependency: "direct dev"
+    description:
+      name: freezed
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.14.1+2"
   freezed_annotation:
     dependency: "direct main"
     description:
@@ -268,14 +268,14 @@ packages:
     source: hosted
     version: "0.6.3"
   json_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
   json_serializable:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: json_serializable
       url: "https://pub.dartlang.org"
@@ -365,15 +365,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  shared_models:
-    dependency: "direct main"
-    description:
-      path: shared_models
-      ref: HEAD
-      resolved-ref: d989489e4efb1d622b0f168024f862a1f2e9f430
-      url: "https://github.com/enspyrco/the_process"
-    source: git
-    version: "0.0.0"
   shelf:
     dependency: "direct main"
     description:

@@ -1,5 +1,5 @@
+import 'package:create_gdocs_microservice/src/models/google_user_credentials.dart';
 import 'package:googleapis/firestore/v1.dart';
-import 'package:shared_models/shared_models.dart' show GoogleUserCredentials;
 
 /// This extension is used on a document returned from a database read.
 /// The fields should always hold the expected values so this extension will

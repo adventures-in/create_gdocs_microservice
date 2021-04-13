@@ -12,10 +12,10 @@ Sending a HTTP GET request to ... with a json payload of ... results in ...
 ## Simulate a hosted environment with Docker
 
 ```shell
-$ docker build -t hello .
+$ docker build -t create_gdocs .
 ...
 
-$ docker run -it -p 8080:8080 --name app hello
+$ docker run -it -p 8080:8080 --name app create_gdocs
 Listening on :8080
 ```
 
@@ -23,7 +23,6 @@ From another terminal:
 
 ```shell
 curl http://localhost:8080
-Hello, World!
 ```
 
 ## Testing 
