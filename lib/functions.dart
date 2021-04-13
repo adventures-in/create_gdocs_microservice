@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:create_gdocs_microservice/src/extensions/string_extensions.dart';
 import 'package:create_gdocs_microservice/src/services/auth_service.dart';
 import 'package:create_gdocs_microservice/src/services/drive_service.dart';
 import 'package:create_gdocs_microservice/src/services/firestore_service.dart';
+import 'package:create_gdocs_microservice/src/services/settings_service.dart';
 import 'package:functions_framework/functions_framework.dart';
 import 'package:googleapis/docs/v1.dart' as docs;
 import 'package:googleapis/drive/v3.dart' as drive;
@@ -11,13 +13,14 @@ import 'package:googleapis/firestore/v1.dart';
 import 'package:googleapis/secretmanager/v1.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:shelf/shelf.dart';
-import 'package:create_gdocs_microservice/src/extensions/string_extensions.dart';
-
-const adminUserId = '5rKQnmyI79WdJdSmblAuWbcybtw2';
-const parentFolderId = '12K8H-Wb6WK_VRKAhl4XXZKkATciqie42';
 
 @CloudFunction()
 FutureOr<Response> function(Request request) async {
+  // Create a settings service, initialised with user supplied json data
+  final settingsService = await SettingsService.fromFile();
+  // The "creating user" refers to the user account that creates the docs
+  final creatingUserId = settingsService.defaultUserId;
+
   // create a database entry object that will be added to and finally saved
   final docFields = <String, Value>{};
   try {
@@ -28,7 +31,7 @@ FutureOr<Response> function(Request request) async {
         FirestoreService(firestore.FirestoreApi(serviceClient));
     final authService = AuthService();
     final userClient = await authService.getUserClient(
-      adminUserId,
+      creatingUserId,
       firestoreService,
       SecretManagerApi(serviceClient),
     );
@@ -36,7 +39,7 @@ FutureOr<Response> function(Request request) async {
         DriveService(drive.DriveApi(userClient), docs.DocsApi(userClient));
 
     // Add the id of the user creating the section to the firestore document.
-    docFields['createdBy'] = adminUserId.asValue();
+    docFields['createdBy'] = creatingUserId.asValue();
 
     // Extract section name, update firestore doc and construct title strings
     final sectionName = request.requestedUri.queryParameters['name']!;
@@ -46,7 +49,7 @@ FutureOr<Response> function(Request request) async {
 
     // Use Drive API to create a folder for the section.
     final folder = await driveService.createFolder(
-        name: folderTitle, parentId: parentFolderId);
+        name: folderTitle, parentId: settingsService.rootFolderId);
 
     // Add the folder id to the firestore document for saving to db.
     docFields['folderId'] = folder.id!.asValue();
@@ -62,9 +65,10 @@ FutureOr<Response> function(Request request) async {
 
     // Return the document id to the client.
     return Response.ok(savedFirestoreSectionDoc.name);
-  } catch (error) {
+  } catch (error, trace) {
     // Log and return any errors.
-    print('$error\n\nSection doc fields: $docFields');
+    print('\n\n$error\n\nSection doc fields: $docFields\n\n');
+    print(trace);
     return Response.internalServerError(body: error);
   }
 }
