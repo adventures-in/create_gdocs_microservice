@@ -2,10 +2,23 @@ import 'package:googleapis/docs/v1.dart';
 import 'package:googleapis/drive/v3.dart';
 
 class DriveService {
+  DriveService(this._driveApi, this._docsApi);
+
   final DriveApi _driveApi;
   final DocsApi _docsApi;
 
-  DriveService(this._driveApi, this._docsApi);
+  /// If the [parentId] parameter is not passed, the folder will be top-level
+  Future<File> createFolder({required String name, String? parentId}) async {
+    final newFolder = File()
+      ..name = name
+      ..mimeType = 'application/vnd.google-apps.folder';
+
+    if (parentId != null) {
+      newFolder.parents = [parentId];
+    }
+
+    return await _driveApi.files.create(newFolder);
+  }
 
   // 1. Create a Document object with the given title.
   // 2. Use the DocsApi to create the remote doc.
@@ -20,18 +33,5 @@ class DriveService {
     // move the doc inside the folder
     return await _driveApi.files
         .update(File(), savedDoc.documentId!, addParents: parentId);
-  }
-
-  /// If the [parentId] parameter is not passed, the folder will be top-level
-  Future<File> createFolder({required String name, String? parentId}) async {
-    final newFolder = File()
-      ..name = name
-      ..mimeType = 'application/vnd.google-apps.folder';
-
-    if (parentId != null) {
-      newFolder.parents = [parentId];
-    }
-
-    return await _driveApi.files.create(newFolder);
   }
 }
