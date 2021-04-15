@@ -1,0 +1,27 @@
+{
+  "name": "Nick Meinhold",
+  "picture": "https://lh3.googleusercontent.com/a-/AOh14GjI7gPhw0micPDoMr3PWmsRzksx0kc-z47wMKCpJQ=s96-c",
+  "iss": "https://securetoken.google.com/the-process-tool",
+  "aud": "the-process-tool",
+  "auth_time": 1608989685,
+  "user_id": "5q7USL6lNFZUeTo6WJpzxsGsuef1",
+  "sub": "5q7USL6lNFZUeTo6WJpzxsGsuef1",
+  "iat": 1618464891,
+  "exp": 1618468491,
+  "email": "nick.meinhold@gmail.com",
+  "email_verified": true,
+  "firebase": {
+    "identities": {
+      "google.com": [
+        "109307799112351216636"
+      ],
+      "apple.com": [
+        "001292.2c716d0de21a489da1d34b26df5b4a49.0604"
+      ],
+      "email": [
+        "nick.meinhold@gmail.com"
+      ]
+    },
+    "sign_in_provider": "apple.com"
+  }
+}
