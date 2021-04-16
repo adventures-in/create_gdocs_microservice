@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:create_gdocs_microservice/src/models/request_data.dart';
+import 'package:create_gdocs_microservice/src/models/token_header.dart';
+import 'package:create_gdocs_microservice/src/models/token_payload.dart';
 import 'package:create_gdocs_microservice/src/utils/token_utils.dart';
 import 'package:functions_framework/functions_framework.dart';
 import 'package:googleapis/firestore/v1.dart';
@@ -27,27 +29,16 @@ Future<Response> function(Request request) async {
     throw FormatException('Invalid token');
   }
 
-  final tokenHeader = decodeFromBase64(tokenParts[0]);
-  final tokenPayload = decodeFromBase64(tokenParts[1]);
-  print(jsonEncode(tokenHeader));
-  print(jsonEncode(tokenPayload));
+  final tokenHeader = TokenHeader.fromJson(decodeFromBase64(tokenParts[0]));
+  final tokenPayload = TokenPayload.fromJson(decodeFromBase64(tokenParts[1]));
 
-  // Verify id token following rules in:
-  // https://firebase.google.com/docs/auth/admin/verify-id-tokens#verify_id_tokens_using_a_third-party_jwt_library
-
-  final Map<String, dynamic> publicKeysMap = jsonDecode(publicKeysString);
-  if (tokenHeader['alg'] != 'RS256' ||
-      !publicKeysMap.keys.contains(tokenHeader['kid'])) {
-    throw FormatException('invalid token');
+  if (tokenHeader.isValid && tokenPayload.isValid) {
+    print(jsonEncode(tokenHeader));
+    print(jsonEncode(tokenPayload));
   }
 
-  final currentDate = DateTime.now();
   // If the current date is after the expiration date, token is expired
   // If the the Issued-at time is not in the past, token is invalid
-  if (currentDate.isAfter(tokenPayload['exp']) ||
-      currentDate.isBefore(tokenPayload['iat'])) {
-    throw FormatException('invalid token');
-  }
 
   // User supplied config is in the json data
   // The "creating user" refers to the user account that creates the docs
