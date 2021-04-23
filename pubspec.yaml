@@ -13,6 +13,7 @@ dependencies:
   freezed_annotation: any
   googleapis: any
   googleapis_auth: any
+  pointycastle: any
 
 dev_dependencies:
   build_runner: any
