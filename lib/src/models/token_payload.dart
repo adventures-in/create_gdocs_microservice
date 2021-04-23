@@ -20,16 +20,37 @@ class TokenPayload with _$TokenPayload {
       DateTime.fromMillisecondsSinceEpoch(exp * 1000);
   late final DateTime issuedAtTime =
       DateTime.fromMillisecondsSinceEpoch(iat * 1000);
+  late final DateTime authenticationTime =
+      DateTime.fromMillisecondsSinceEpoch(auth_time * 1000);
+  late final Duration tokenLifetime = Duration(seconds: exp - iat);
 
-  bool get isValid {
+  // Check token components and throws if anything is invalid.
+  //  + 5 minutes for clock skew ?
+  void validate(String projectId) {
     final currentDate = DateTime.now();
 
-    final expired = currentDate.isAfter(expirationTime);
-    final fromTheFuture = currentDate.isBefore(issuedAtTime);
+    // If the current date is after the expiration date, token is expired
+    if (currentDate.isAfter(expirationTime)) throw 'Token is old.';
+    // If the the Issued-at time is not in the past, token is invalid
+    if (currentDate.isBefore(issuedAtTime)) throw 'Token is from the future.';
 
-    if (expired || fromTheFuture) return false;
+    // aud = Audience
+    // Must be your Firebase project ID, the unique identifier for your Firebase project, which can be found in the URL of that project's console.
+    if (aud != projectId) throw 'Token audience != projectId.';
 
-    return true;
+    // iss = Issuer
+    // Must be "https://securetoken.google.com/<projectId>", where <projectId> is the same project ID used for aud above.
+    if (iss != 'https://securetoken.google.com/$aud') throw 'invalid Issuer';
+
+    // sub = Subject
+    // Must be a non-empty string and must be the uid of the user or device.
+    // TODO: compare to the final uid
+
+    // auth_time Authentication time
+    // Must be in the past. The time when the user authenticated.
+    if (currentDate.isBefore(authenticationTime)) {
+      throw 'User authenticated in the future.';
+    }
   }
 
   String get projectId => aud;
