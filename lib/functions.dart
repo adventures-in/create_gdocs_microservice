@@ -1,10 +1,6 @@
 import 'dart:convert';
 
 import 'package:create_gdocs_microservice/src/models/request_data.dart';
-import 'package:create_gdocs_microservice/src/models/token_header.dart';
-import 'package:create_gdocs_microservice/src/models/token_payload.dart';
-import 'package:create_gdocs_microservice/src/utils/cloud_metadata.dart';
-import 'package:create_gdocs_microservice/src/utils/token_utils.dart';
 import 'package:functions_framework/functions_framework.dart';
 import 'package:googleapis/firestore/v1.dart';
 import 'package:shelf/shelf.dart';
@@ -18,9 +14,8 @@ Future<Response> function(Request request) async {
     final requestData = RequestData.fromJson(json.decode(bodyString));
   }
 
-  await validateAuthHeader(request);
-
   // verify headers include firebase auth credentials
+  await validateAuthHeader(request);
 
   // User supplied config is in the json data
   // The "creating user" refers to the user account that creates the docs
@@ -78,33 +73,4 @@ Future<Response> function(Request request) async {
     print(trace);
     return Response.internalServerError(body: error);
   }
-}
-
-Future<void> validateAuthHeader(Request request) async {
-  final header = request.headers['authorization'];
-  if (header == null) throw 'No auth header';
-  final headerParts = header.split(' ');
-  if (headerParts.first != 'Bearer') throw 'Auth header must be Bearer';
-  final token = headerParts.last;
-
-  final tokenParts = token.split('.');
-  if (tokenParts.length != 3) {
-    throw FormatException('Invalid token');
-  }
-
-  final tokenHeader = TokenHeader.fromJson(decodeFromBase64(tokenParts[0]));
-  final tokenPayload = TokenPayload.fromJson(decodeFromBase64(tokenParts[1]));
-
-  // Check that the header has the expected values.
-  tokenHeader.validate();
-
-  // Retrieve the projectId and throw if not found
-  final projectId = await CloudMetadata.projectId();
-  if (projectId == null) throw 'Project Id was not found.';
-
-  // Check that the payload has the expected values.
-  tokenPayload.validate(projectId);
-
-  // looking at the crypto package README utf8.encode seems to be first step
-  final signatureAsInts = utf8.encode(tokenParts[2]);
 }
